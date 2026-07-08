@@ -35,7 +35,7 @@ COPY --from=sources /src/backend/composer.json /src/backend/composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --optimize-autoloader --ignore-platform-reqs
 
 # ---------- Stage 4: фінальний образ ----------
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache nginx supervisor postgresql-dev git \
     && docker-php-ext-install pdo pdo_pgsql opcache
@@ -45,6 +45,7 @@ WORKDIR /var/www/html
 # Код бекенду
 COPY --from=sources /src/backend/. .
 COPY --from=vendor /app/vendor ./vendor
+COPY --from=vendor /usr/bin/composer /usr/bin/composer
 
 # Білд фронтенду кладемо в public/ як статичні файли
 # Якщо у фронтенд-репо svелективний SPA (не Laravel Blade) - роздаємо як статику окремою локацією nginx
