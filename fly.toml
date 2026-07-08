@@ -7,6 +7,12 @@ app = 'expedition-demo'
 primary_region = 'ams'
 
 [build]
+  [build.args]
+    VITE_USE_MOCKS = 'false'
+    VITE_API_BASE_URL = '/api'
+    VITE_REVERB_HOST = 'expedition-demo.fly.dev'
+    VITE_REVERB_APP_KEY = '73ea366c4c3e9c8811c774ed9f83f7b7'
+
 [env]
   APP_DEBUG = 'false'
   APP_ENV = 'production'
