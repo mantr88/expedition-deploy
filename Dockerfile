@@ -22,6 +22,17 @@ RUN --mount=type=secret,id=git_token \
 # ---------- Stage 2: збірка фронтенду ----------
 FROM node:20-alpine AS frontend
 WORKDIR /app
+
+ARG VITE_USE_MOCKS=false
+ARG VITE_API_BASE_URL=/api
+ARG VITE_REVERB_HOST=expedition-demo.fly.dev
+ARG VITE_REVERB_APP_KEY
+
+ENV VITE_USE_MOCKS=$VITE_USE_MOCKS
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+ENV VITE_REVERB_HOST=$VITE_REVERB_HOST
+ENV VITE_REVERB_APP_KEY=$VITE_REVERB_APP_KEY
+
 COPY --from=sources /src/frontend/package.json /src/frontend/package-lock.json ./
 RUN npm ci
 COPY --from=sources /src/frontend/. .
@@ -38,7 +49,7 @@ RUN composer install --no-dev --no-scripts --no-autoloader --optimize-autoloader
 FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache nginx supervisor postgresql-dev git \
-    && docker-php-ext-install pdo pdo_pgsql opcache
+    && docker-php-ext-install pdo pdo_pgsql opcache pcntl
 
 WORKDIR /var/www/html
 
