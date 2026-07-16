@@ -5,19 +5,15 @@ ARG FRONTEND_REPO=https://github.com/mantr88/expedition-frontend.git
 ARG BACKEND_REF=main
 ARG FRONTEND_REF=main
 
-# ---------- Stage 1: клонування репо (з приватним доступом через secret) ----------
+# ---------- Stage 1: клонування репо (публічні, без авторизації) ----------
 FROM alpine/git:2.45.2 AS sources
 ARG BACKEND_REPO
 ARG FRONTEND_REPO
 ARG BACKEND_REF
 ARG FRONTEND_REF
 
-RUN --mount=type=secret,id=git_token \
-    GIT_TOKEN=$(cat /run/secrets/git_token) && \
-    git clone --depth 1 --branch "${BACKEND_REF}" \
-      "https://${GIT_TOKEN}@${BACKEND_REPO#https://}" /src/backend && \
-    git clone --depth 1 --branch "${FRONTEND_REF}" \
-      "https://${GIT_TOKEN}@${FRONTEND_REPO#https://}" /src/frontend
+RUN git clone --depth 1 --branch "${BACKEND_REF}" "${BACKEND_REPO}" /src/backend && \
+    git clone --depth 1 --branch "${FRONTEND_REF}" "${FRONTEND_REPO}" /src/frontend
 
 # ---------- Stage 2: збірка фронтенду ----------
 FROM node:20-alpine AS frontend
