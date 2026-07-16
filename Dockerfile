@@ -20,7 +20,7 @@ FROM node:20-alpine AS frontend
 WORKDIR /app
 
 ARG VITE_USE_MOCKS=false
-ARG VITE_API_BASE_URL=/api
+ARG VITE_API_BASE_URL=
 ARG VITE_REVERB_HOST=expedition-demo.fly.dev
 ARG VITE_REVERB_APP_KEY
 
