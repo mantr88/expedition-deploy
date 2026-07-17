@@ -29,8 +29,14 @@ DB_PASSWORD=$(openssl rand -hex 16)
 APP_KEY=base64:$(openssl rand -base64 32)
 REVERB_APP_KEY=$(openssl rand -hex 16)
 REVERB_APP_SECRET=$(openssl rand -base64 32)
+
+# Домени / IP адреси для Sanctum автентифікації та CORS
+# Замініть на вашу IP-адресу або домен: наприклад, http://35.207.37.166
+APP_URL=http://localhost
+SANCTUM_STATEFUL_DOMAINS=localhost
+FRONTEND_URL=http://localhost
 EOF
-    echo "Файл .env створено. БУДЬ ЛАСКА, ВІДРЕДАГУЙТЕ .env І ЗАПУСТІТЬ СКРИПТ ЗНОВУ."
+    echo "Файл .env створено. БУДЬ ЛАСКА, ВІДРЕДАГУЙТЕ .env (встановіть токен, IP/домен) І ЗАПУСТІТЬ СКРИПТ ЗНОВУ."
     exit 0
 fi
 
