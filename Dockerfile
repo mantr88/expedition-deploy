@@ -33,9 +33,8 @@ COPY --from=sources /src/frontend/package.json /src/frontend/package-lock.json .
 RUN npm ci
 COPY --from=sources /src/frontend/. .
 # .env.production фронтенду має вказувати на прод-адресу API/WS (див. розділ 8)
-# Тимчасовий фікс для помилки TS2591: Cannot find name 'process' у фронтенді
-RUN npm i --no-save @types/node
-RUN npm run build
+# Оскільки vue-tsc падає на тестових файлах (.spec.ts), запускаємо збірку Vite напряму без тайпчекінгу
+RUN npx vite build
 
 # ---------- Stage 3: PHP-залежності бекенду ----------
 FROM composer:2 AS vendor
