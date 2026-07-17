@@ -44,7 +44,7 @@ RUN composer install --no-dev --no-scripts --no-autoloader --optimize-autoloader
 # ---------- Stage 4: фінальний образ ----------
 FROM php:8.4-fpm-alpine
 
-RUN apk add --no-cache nginx supervisor postgresql-dev git \
+RUN apk add --no-cache nginx supervisor postgresql-dev git gettext \
     && docker-php-ext-install pdo pdo_pgsql opcache pcntl
 
 WORKDIR /var/www/html
@@ -62,7 +62,7 @@ RUN composer dump-autoload --optimize \
     && mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.conf /etc/nginx/http.d/default.conf.template
 COPY docker/supervisord.conf /etc/supervisord.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
