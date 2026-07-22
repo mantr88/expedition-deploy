@@ -7,6 +7,10 @@ services:
         # Під час деплою можна передавати їх як build args або використовувати secrets.
         BACKEND_REF: ${BACKEND_REF:-main}
         FRONTEND_REF: ${FRONTEND_REF:-main}
+        VITE_REVERB_HOST: ${VITE_REVERB_HOST}
+        VITE_REVERB_PORT: ${VITE_REVERB_PORT}
+        VITE_REVERB_SCHEME: ${VITE_REVERB_SCHEME}
+        VITE_REVERB_APP_KEY: ${REVERB_APP_KEY}
     image: expedition-app:latest
     restart: always
     ports:
