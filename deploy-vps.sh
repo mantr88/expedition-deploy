@@ -56,7 +56,8 @@ echo "Збираємо та запускаємо контейнери..."
 # Якщо ви використовуєте BuildKit secrets, розкоментуйте рядок з секретами в Dockerfile
 # і додайте сюди --secret id=git_token,src=.env
 
-docker compose up -d --build
+docker compose build --no-cache
+docker compose up -d
 
 echo "=== Розгортання завершено! ==="
 echo "Перевірте статуси контейнерів за допомогою 'docker compose ps'"
