@@ -35,6 +35,14 @@ REVERB_APP_SECRET=$(openssl rand -base64 32)
 APP_URL=http://localhost
 SANCTUM_STATEFUL_DOMAINS=localhost
 FRONTEND_URL=http://localhost
+
+# Налаштування WebSocket (Reverb) для фронтенду
+# Замініть на IP вашої VPS або домен (наприклад, 35.207.37.166 або expedition.com)
+VITE_REVERB_HOST=35.207.37.166
+# Порт для підключення клієнта (80 для HTTP, 443 для HTTPS)
+VITE_REVERB_PORT=80
+# Схема підключення клієнта (http для ws://, https для wss://)
+VITE_REVERB_SCHEME=http
 EOF
     echo "Файл .env створено. БУДЬ ЛАСКА, ВІДРЕДАГУЙТЕ .env (встановіть токен, IP/домен) І ЗАПУСТІТЬ СКРИПТ ЗНОВУ."
     exit 0
